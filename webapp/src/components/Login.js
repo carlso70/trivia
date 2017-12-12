@@ -7,7 +7,15 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: true
+            open: this.props.open
+        }
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        if (nextProps.open != this.state.open) {
+            this.setState({
+                open: nextProps.open
+            });
         }
     }
 
