@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import Login from './pages/Login';
+import Login from './components/Login';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
