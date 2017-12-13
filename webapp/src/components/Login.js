@@ -31,9 +31,30 @@ class Login extends Component {
             this.setState({
                 createAccount: true
             });
+            return;
         }
 
         // Create account
+        fetch(createUserUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.pass,
+                question: this.state.question,
+                answer: this.state.answer
+            }),
+        }).then((response) => {
+            if (response.status == 200) {
+                return response.json()
+            }
+            return null;
+        }).then((data) => {
+            if (data)
+                console.log(data);
+        });
     }
 
     // Log in the user, and save token to localstorage
@@ -43,6 +64,7 @@ class Login extends Component {
             this.setState({
                 createAccount: false
             });
+            return;
         }
 
         // Log in
@@ -56,9 +78,13 @@ class Login extends Component {
                 password: this.state.pass
             }),
         }).then((response) => {
-            return response.json()
+            if (response.status == 200) {
+                return response.json()
+            }
+            return null;
         }).then((data) => {
-            console.log(data)
+            if (data)
+                console.log(data);
         });
     }
 
@@ -124,6 +150,7 @@ class Login extends Component {
                         <TextField
                             value={this.state.pass}
                             onChange={this.handlePasswordChange}
+                            type="password"
                             hintText="Password" />
                         <br />
                         <TextField
@@ -154,6 +181,7 @@ class Login extends Component {
                         <TextField
                             value={this.state.pass}
                             onChange={this.handlePasswordChange}
+                            type="password"
                             hintText="Password" />
                     </Dialog>
                 </div>
