@@ -46,6 +46,20 @@ class Login extends Component {
         }
 
         // Log in
+        fetch(loginUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.pass
+            }),
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            console.log(data)
+        });
     }
 
     close = () => {
