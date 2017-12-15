@@ -14,6 +14,7 @@ import {
     TableRowColumn,
 } from 'material-ui/Table';
 import Slider from 'material-ui/Slider';
+import { listGames } from '../utils/urls';
 
 const testTable = [
     {
@@ -40,7 +41,6 @@ for (let i = 1; i < 20; i++ ) {
     countItems.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
 }
 
-
 // Home Page contains the list of active, games and user stats
 class Home extends Component {
     constructor(props) {
@@ -49,9 +49,11 @@ class Home extends Component {
             showLogin: false,
             dif: 1,
             count: 5,
-            games: testTable,
+            games: [],
             selected: -1
         };
+
+        this.getAllGames();
     }
 
     handleDifChange = (event, index, value) => this.setState({dif: value});
@@ -69,6 +71,23 @@ class Home extends Component {
                 selected: key
             });
         }
+    }
+
+    getAllGames = () => {
+        fetch(listGames, {
+            method: 'GET'
+        }).then((response) => {
+            if (response.status == 200)
+                return response.json();
+            return null;
+        }).then((data) => {
+            if (data){
+                console.log(data);
+                this.setState({
+                    games: data
+                });
+            }
+        });
     }
 
     render() {
@@ -106,14 +125,14 @@ class Home extends Component {
                 <TableBody deselectOnClickaway={false}>
                             {this.state.games.map((row, index) => (
                                     <TableRow key={index} selected={this.state.selected == index}>
-                                    <TableRowColumn>{row.gameId}</TableRowColumn>
-                                    <TableRowColumn>{row.host}</TableRowColumn>
+                                    <TableRowColumn>{row.id}</TableRowColumn>
+                                    <TableRowColumn>{row.users == null ? "empty" : row.host}</TableRowColumn>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 <FlatButton style={{ margin: 15 }} onClick={() => this.props.joinGame(this.state.games[this.state.selected])}>Join Game</FlatButton>
-                    <FlatButton style={{ margin: 15 }}>Refresh</FlatButton>
+                <FlatButton style={{ margin: 15 }} onClick={() => this.getAllGames()}>Refresh</FlatButton>
                 </Paper>
             </div>
         );

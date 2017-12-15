@@ -28,6 +28,7 @@ type Game struct {
 	AskingQuestion  bool                `json:"askingQuestion"`
 	QuestionCt      int                 `json:"questionCt"`
 	GameDifficulty  int                 `json:"difficulty"`
+	Host            string              `json:"host"`
 	Winner          string              `json:"-"`
 	RealUserCount   int                 `json:"-"`
 	responses       chan string         `json:"-"`

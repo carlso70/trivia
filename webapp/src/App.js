@@ -50,6 +50,10 @@ class App extends Component {
         }).then((data) => {
             if (data) {
                 console.log(data);
+                this.setState({
+                    game: data,
+                    inGame: true
+                });
             }
         });
     }
@@ -57,28 +61,51 @@ class App extends Component {
     // joinGame attempts to create a game, then swtich the state to inGame and display a game page
     joinGame = (game) => {
         console.log(game.gameId);
+        if (!this.state.user) {
+            alert("Please Sign In");
+            return;
+        }
+
+        console.log(this.state.user.id);
+
+        fetch(joinGameUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: this.state.user.id,
+                gameId: game.gameId
+            })
+        }).then((response) => {
+            if(response.status == 200)
+                return response.json();
+            return null;
+        }).then((data) => {
+            if (data) {
+                console.log(data);
+                this.setState({
+                    game: data,
+                    inGame: true
+                });
+            }
+        });
     }
 
     render() {
-        if (!this.state.user) {
-            return (
-                    <MuiThemeProvider>
-                    <div className="App">
-                    <Header user={this.state.user}/>
-                    <h3>PLEASE LOG IN</h3>
-                    </div>
-                    </MuiThemeProvider>
-            )
-        } else {
-            return (
-                    <MuiThemeProvider>
-                    <div className="App">
-                    <Header user={this.state.user}/>
-                    <Home createGame={this.createGame} joinGame={this.joinGame}/>
-                    </div>
-                    </MuiThemeProvider>
-            );
-        }
+        var component;
+        if (!this.state.user) component =  <h3>PLEASE LOG IN</h3>;
+        else if (this.state.inGame) component = <Game game={this.state.game} />;
+        else component = <Home createGame={this.createGame} joinGame={this.joinGame}/>;
+
+        return (
+                <MuiThemeProvider>
+                <div className="App">
+                <Header user={this.state.user}/>
+                {component}
+                </div>
+                </MuiThemeProvider>
+        );
     }
 }
 

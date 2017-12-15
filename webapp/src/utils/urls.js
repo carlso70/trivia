@@ -5,6 +5,7 @@ export const createGameUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazona
 export const joinGameUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/joingame";
 export const highScoresUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/highscores";
 export const leaveGameUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/leavegame";
+export const listGames = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/listgames";
 export const setSecurityQuestionUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/setsecurityquestion";
 export const answerSecurityQuestionUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/answersecurityquestion";
 export const getSecurityQuestionUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/getsecurityquestion";

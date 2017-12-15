@@ -41,18 +41,21 @@ func (g *GameManager) deleteDoneGames() {
 // Cleaner sweeps all the games and removes the ones that are over
 func (g *GameManager) Cleaner() {
 	for {
-		<-time.After(3 * time.Millisecond)
+		<-time.After(time.Millisecond)
 		go g.deleteDoneGames()
 	}
 }
 
 // CreateGame adds a game to the GameServer
-func (g *GameManager) CreateGame(difficulty int, questionCt int) (*game.Game, error) {
+func (g *GameManager) CreateGame(difficulty int, questionCt int, userId int) (*game.Game, error) {
 	// Create game instance
 	newGame := game.Init()
 	newGame.GameDifficulty = difficulty
 	newGame.QuestionCt = questionCt
 	newGame.BuildQuestionDeck()
+
+	usr := repo.FindUser(userId)
+	newGame.Host = usr.Username
 
 	// Start open the websocket to connect to the game
 	newGame.InitGameSocket()
