@@ -35,8 +35,8 @@ func CreateGame(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get the gamemanager instance, create new game, and add user to the game
-	gamemanager := gamemanager.GetInstance()
-	game, err := gamemanager.CreateGame(request.Difficulty, request.QuestionCt, request.UserId)
+	gm := gamemanager.GetInstance()
+	game, err := gm.CreateGame(request.Difficulty, request.QuestionCt, request.UserId)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
