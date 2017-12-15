@@ -53,6 +53,7 @@ func Init() *Game {
 		QuestionDeck:   deck,
 		Scoreboard:     scoreboard,
 		responses:      responses,
+		Host:           "",
 		GameDifficulty: 1,
 		QuestionCt:     10,
 		GameOver:       false,
