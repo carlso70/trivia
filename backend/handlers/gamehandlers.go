@@ -17,6 +17,7 @@ type GameSessionRequest struct {
 
 // CreateGame generates a new game, and adds the user to the game, responds back with game id token
 func CreateGame(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Creating Game")
 	var request GameSessionRequest
 
 	decoder := json.NewDecoder(r.Body)
