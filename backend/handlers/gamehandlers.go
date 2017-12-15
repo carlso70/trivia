@@ -55,6 +55,7 @@ func CreateGame(w http.ResponseWriter, r *http.Request) {
 
 // StartGame starts running a new game instance, checks if it exists
 func StartGame(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Starting Game")
 	var request GameSessionRequest
 
 	decoder := json.NewDecoder(r.Body)
@@ -79,6 +80,7 @@ func StartGame(w http.ResponseWriter, r *http.Request) {
 
 // JoinGame adds a user to a game with a specific id
 func JoinGame(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Joining Game")
 	var request GameSessionRequest
 
 	decoder := json.NewDecoder(r.Body)
@@ -107,6 +109,7 @@ func JoinGame(w http.ResponseWriter, r *http.Request) {
 
 // LeaveGame adds a user to a game with a specific id
 func LeaveGame(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Leaving Game")
 	var request GameSessionRequest
 
 	decoder := json.NewDecoder(r.Body)
@@ -135,6 +138,7 @@ func LeaveGame(w http.ResponseWriter, r *http.Request) {
 
 // ListGames responds with a list of all the active games
 func ListGames(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Listing Games")
 	// Get the gamemanager instance, get all active games
 	gamemanager := gamemanager.GetInstance()
 	games := gamemanager.GetGames()
