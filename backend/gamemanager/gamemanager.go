@@ -62,7 +62,7 @@ func (g *GameManager) CreateGame(difficulty int, questionCt int, userId int) (*g
 	if err := newGame.AddUserToGame(usr); err != nil {
 		panic(err)
 	}
-
+	fmt.Println("Host:", usr.Username, "created game")
 	// Set the game host to the creator
 	newGame.Host = usr.Username
 
