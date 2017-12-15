@@ -2,6 +2,7 @@ package repo
 
 import (
 	"github.com/carlso70/trivia/backend/user"
+	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 

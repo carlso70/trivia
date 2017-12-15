@@ -4,7 +4,8 @@ import (
 	"fmt"
 
 	"github.com/carlso70/trivia/backend/user"
-	//"gopkg.in/mgo.v2/bson"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // Returns an array of users sorted by highest score
