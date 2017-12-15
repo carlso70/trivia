@@ -54,11 +54,21 @@ func (g *GameManager) CreateGame(difficulty int, questionCt int, userId int) (*g
 	newGame.QuestionCt = questionCt
 	newGame.BuildQuestionDeck()
 
-	usr := repo.FindUser(userId)
+	// Find the user in the db, then add the user to the game
+	usr, err := repo.FindUser(userId)
+	if err != nil {
+		panic(err)
+	}
+	if err := newGame.AddUserToGame(usr); err != nil {
+		panic(err)
+	}
+
+	// Set the game host to the creator
 	newGame.Host = usr.Username
 
 	// Start open the websocket to connect to the game
 	newGame.InitGameSocket()
+
 	// Add game to list of games
 	g.Games = append(g.Games, newGame)
 	// Return the games Id, and error if it exists
