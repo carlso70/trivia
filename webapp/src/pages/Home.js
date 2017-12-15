@@ -48,12 +48,28 @@ class Home extends Component {
         this.state = {
             showLogin: false,
             dif: 1,
-            count: 5
+            count: 5,
+            games: testTable,
+            selected: -1
         };
     }
 
     handleDifChange = (event, index, value) => this.setState({dif: value});
     handleCountChange = (event, index, value) => this.setState({count: value});
+
+    onRowSelection = (key) => {
+        if (key.length < 1) {
+            this.setState({
+                selected: -1
+            });
+        }
+        else {
+            console.log(key);
+            this.setState({
+                selected: key
+            });
+        }
+    }
 
     render() {
         return (
@@ -72,31 +88,31 @@ class Home extends Component {
                  onChange={this.handleCountChange}
                  maxHeight={200}
                   >
-                {countItems}
+                  {countItems}
                 </SelectField>
                 <br />
-                <RaisedButton label="Create Game"/>
+                <RaisedButton label="Create Game" onClick={() => this.props.createGame(this.state.count, this.state.dif)}/>
                 </Paper>
 
                 <Paper style={style} zDepth={2}>
                     <h3>Games</h3>
-                    <Table>
+                <Table onRowSelection={this.onRowSelection}>
                         <TableHeader>
-                            <TableRow>
+                            <TableRow >
                                 <TableHeaderColumn tooltip="Game ID">GAME ID</TableHeaderColumn>
                                 <TableHeaderColumn tooltip="Host">Host</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
-                        <TableBody>
-                            {testTable.map((row, index) => (
-                                <TableRow key={index}>
+                <TableBody deselectOnClickaway={false}>
+                            {this.state.games.map((row, index) => (
+                                    <TableRow key={index} selected={this.state.selected == index}>
                                     <TableRowColumn>{row.gameId}</TableRowColumn>
                                     <TableRowColumn>{row.host}</TableRowColumn>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
-                    <FlatButton style={{ margin: 15 }}>Join Game</FlatButton>
+                <FlatButton style={{ margin: 15 }} onClick={() => this.props.joinGame(this.state.games[this.state.selected])}>Join Game</FlatButton>
                     <FlatButton style={{ margin: 15 }}>Refresh</FlatButton>
                 </Paper>
             </div>

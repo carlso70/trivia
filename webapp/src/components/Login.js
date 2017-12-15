@@ -48,12 +48,14 @@ class Login extends Component {
             }),
         }).then((response) => {
             if (response.status == 200) {
-                return response.json()
+                return response.json();
             }
             return null;
         }).then((data) => {
-            if (data)
-                console.log(data);
+            if (data) {
+                localStorage.setItem("triviaUser", JSON.stringify(data));
+                window.location.reload();
+            }
         });
     }
 
@@ -79,18 +81,21 @@ class Login extends Component {
             }),
         }).then((response) => {
             if (response.status == 200) {
-                return response.json()
+                return response.json();
             }
             return null;
         }).then((data) => {
-            if (data)
-                console.log(data);
+            if (data) {
+                localStorage.setItem("triviaUser", JSON.stringify(data));
+                console.log(JSON.stringify(data));
+                window.location.reload();
+            }
         });
     }
 
     close = () => {
         this.setState({
-            open: false,
+            open: false
         });
     }
 
