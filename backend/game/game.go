@@ -7,10 +7,10 @@ import (
 	"log"
 	"time"
 
-	"github.com/carlso70/triviacast/backend/question"
-	"github.com/carlso70/triviacast/backend/repo"
-	"github.com/carlso70/triviacast/backend/user"
-	"github.com/carlso70/triviacast/backend/utils"
+	"github.com/carlso70/trivia/backend/question"
+	"github.com/carlso70/trivia/backend/repo"
+	"github.com/carlso70/trivia/backend/user"
+	"github.com/carlso70/trivia/backend/utils"
 )
 
 type QuestionResponse struct {

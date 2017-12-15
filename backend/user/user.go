@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/carlso70/triviacast/backend/utils"
+	"github.com/carlso70/trivia/backend/utils"
 )
 
 // SessionId is the current gameId

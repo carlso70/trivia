@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/carlso70/triviacast/backend/gamemanager"
-	"github.com/carlso70/triviacast/backend/routing"
+	"github.com/carlso70/trivia/backend/gamemanager"
+	"github.com/carlso70/trivia/backend/routing"
 	"github.com/gorilla/handlers"
 )
 

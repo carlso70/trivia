@@ -11,10 +11,10 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/carlso70/triviacast/backend/gamemanager"
-	"github.com/carlso70/triviacast/backend/repo"
-	"github.com/carlso70/triviacast/backend/user"
-	"github.com/carlso70/triviacast/backend/utils"
+	"github.com/carlso70/trivia/backend/gamemanager"
+	"github.com/carlso70/trivia/backend/repo"
+	"github.com/carlso70/trivia/backend/user"
+	"github.com/carlso70/trivia/backend/utils"
 )
 
 type AccountRequest struct {

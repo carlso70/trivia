@@ -3,7 +3,7 @@ package game
 import (
 	"testing"
 
-	"github.com/carlso70/triviacast/backend/user"
+	"github.com/carlso70/trivia/backend/user"
 )
 
 var testGameId = -99

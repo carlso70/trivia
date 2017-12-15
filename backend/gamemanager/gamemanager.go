@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/carlso70/triviacast/backend/game"
-	"github.com/carlso70/triviacast/backend/repo"
-	"github.com/carlso70/triviacast/backend/user"
+	"github.com/carlso70/trivia/backend/game"
+	"github.com/carlso70/trivia/backend/repo"
+	"github.com/carlso70/trivia/backend/user"
 )
 
 type GameManager struct {

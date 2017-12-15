@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/carlso70/triviacast/backend/user"
+	"github.com/carlso70/trivia/backend/user"
 )
 
 var testId = -1

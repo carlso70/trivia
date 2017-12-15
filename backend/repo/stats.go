@@ -2,8 +2,8 @@ package repo
 
 import (
 	"fmt"
-	"github.com/carlso70/triviacast/backend/user"
-	"gopkg.in/mgo.v2"
+
+	"github.com/carlso70/trivia/backend/user"
 	//"gopkg.in/mgo.v2/bson"
 )
 

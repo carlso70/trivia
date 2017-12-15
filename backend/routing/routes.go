@@ -3,7 +3,7 @@ package routing
 import (
 	"net/http"
 
-	"github.com/carlso70/triviacast/backend/handlers"
+	"github.com/carlso70/trivia/backend/handlers"
 )
 
 type Route struct {

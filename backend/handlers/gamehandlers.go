@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/carlso70/triviacast/backend/gamemanager"
+	"github.com/carlso70/trivia/backend/gamemanager"
 )
 
 type GameSessionRequest struct {

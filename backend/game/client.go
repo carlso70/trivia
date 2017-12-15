@@ -11,7 +11,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/carlso70/triviacast/backend/user"
+	"github.com/carlso70/trivia/backend/user"
 	"github.com/gorilla/websocket"
 )
 
