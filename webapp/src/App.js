@@ -27,14 +27,11 @@ class App extends Component {
     connectToGameSocket = () => {
         if (!this.state.game.id)
             return; // TODO display not in game error msg
-        if (this.socket) {
-            // reconnect the websocket
-        }
         const endpoint = gameSocketUrl + this.state.game.id;
         this.socket = new WebSocket(endpoint);
         this.socket.onmessage = evt => {
             console.log(evt);
-            this.setState({ game: evt.data });
+            this.setState({ game: JSON.parse(evt.data) });
         };
     }
 
@@ -48,7 +45,7 @@ class App extends Component {
 
     // createGame attempts to create a game, and then join the game
     createGame = (count, dif) => {
-        console.log(this.state.user)
+        console.log(this.state.user);
         if (!this.state.user) {
             alert("Please Sign In");
             return;
