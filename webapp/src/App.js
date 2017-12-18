@@ -6,7 +6,6 @@ import Game from './pages/Game';
 import Home from './pages/Home';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { createGameUrl, joinGameUrl, gameSocketUrl } from './utils/urls';
-import socketIOClient from 'socket.io-client';
 
 class App extends Component {
     constructor(props) {
@@ -36,7 +35,7 @@ class App extends Component {
     }
 
     broadcastGameMessage = (message) => {
-        if(!this.socket) {
+        if (!this.socket) {
             console.log("Socket not initialized");
             return;
         }
@@ -64,7 +63,7 @@ class App extends Component {
                 userId: this.state.user.id
             })
         }).then((response) => {
-            if(response.status == 200)
+            if (response.status == 200)
                 return response.json();
             return null;
         }).then((data) => {
@@ -100,7 +99,7 @@ class App extends Component {
                 gameId: game.gameId
             })
         }).then((response) => {
-            if(response.status == 200)
+            if (response.status == 200)
                 return response.json();
             return null;
         }).then((data) => {
@@ -118,17 +117,17 @@ class App extends Component {
 
     render() {
         var component;
-        if (!this.state.user) component =  <h3>PLEASE LOG IN</h3>;
-        else if (this.state.inGame) component = <Game game={this.state.game} />;
-        else component = <Home createGame={this.createGame} joinGame={this.joinGame}/>;
+        if (!this.state.user) component = <h3>PLEASE LOG IN</h3>;
+        else if (this.state.inGame) component = <Game user={this.state.user} game={this.state.game} />;
+        else component = <Home user={this.state.user} createGame={this.createGame} joinGame={this.joinGame} />;
 
         return (
-                <MuiThemeProvider>
+            <MuiThemeProvider>
                 <div className="App">
-                <Header user={this.state.user}/>
-                {component}
+                    <Header user={this.state.user} />
+                    {component}
                 </div>
-                </MuiThemeProvider>
+            </MuiThemeProvider>
         );
     }
 }

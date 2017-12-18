@@ -24,7 +24,7 @@ const style = {
 
 // Creates a list of menu items for the selecting question count on the create game settings paper
 const countItems = [];
-for (let i = 1; i < 20; i++ ) {
+for (let i = 1; i < 20; i++) {
     countItems.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
 }
 
@@ -43,8 +43,8 @@ class Home extends Component {
         this.getAllGames();
     }
 
-    handleDifChange = (event, index, value) => this.setState({dif: value});
-    handleCountChange = (event, index, value) => this.setState({count: value});
+    handleDifChange = (event, index, value) => this.setState({ dif: value });
+    handleCountChange = (event, index, value) => this.setState({ count: value });
 
     onRowSelection = (key) => {
         if (key.length < 1) {
@@ -68,7 +68,7 @@ class Home extends Component {
                 return response.json();
             return null;
         }).then((data) => {
-            if (data){
+            if (data) {
                 console.log(data);
                 this.setState({
                     games: data
@@ -79,47 +79,47 @@ class Home extends Component {
 
     render() {
         return (
-                <div>
+            <div>
                 <Paper style={style} zDepth={2}>
                     <h3>Games</h3>
-                <Table onRowSelection={this.onRowSelection}>
+                    <Table onRowSelection={this.onRowSelection}>
                         <TableHeader>
                             <TableRow >
                                 <TableHeaderColumn tooltip="Game ID">GAME ID</TableHeaderColumn>
                                 <TableHeaderColumn tooltip="Host">Host</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
-                <TableBody deselectOnClickaway={false}>
+                        <TableBody deselectOnClickaway={false}>
                             {this.state.games.map((row, index) => (
-                                    <TableRow key={index} selected={this.state.selected == index}>
+                                <TableRow key={index} selected={this.state.selected == index}>
                                     <TableRowColumn>{row.id}</TableRowColumn>
                                     <TableRowColumn>{row.users == null ? "empty" : row.host}</TableRowColumn>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
-                <FlatButton style={{ margin: 15 }} onClick={() => this.props.joinGame(this.state.games[this.state.selected])}>Join Game</FlatButton>
-                <FlatButton style={{ margin: 15 }} onClick={() => this.getAllGames()}>Refresh</FlatButton>
+                    <FlatButton style={{ margin: 15 }} onClick={() => this.props.joinGame(this.state.games[this.state.selected])}>Join Game</FlatButton>
+                    <FlatButton style={{ margin: 15 }} onClick={() => this.getAllGames()}>Refresh</FlatButton>
                 </Paper>
 
                 <Paper style={style} zDepth={2}>
-                <h3>Game Settings</h3>
-                <SelectField onChange={this.handleDifChange} value={this.state.dif} floatingLabelText="Difficulty">
-                <MenuItem value={1} primaryText="Easy" />
-                <MenuItem value={2} primaryText="Medium" />
-                <MenuItem value={3} primaryText="Hard" />
-                </SelectField>
-                <br/>
-                <SelectField
-            floatingLabelText="Question Count"
-            value={this.state.count}
-            onChange={this.handleCountChange}
-            maxHeight={200}
-                >
-                {countItems}
-            </SelectField>
-                <br />
-                <RaisedButton label="Create Game" onClick={() => this.props.createGame(this.state.count, this.state.dif)}/>
+                    <h3>Game Settings</h3>
+                    <SelectField onChange={this.handleDifChange} value={this.state.dif} floatingLabelText="Difficulty">
+                        <MenuItem value={1} primaryText="Easy" />
+                        <MenuItem value={2} primaryText="Medium" />
+                        <MenuItem value={3} primaryText="Hard" />
+                    </SelectField>
+                    <br />
+                    <SelectField
+                        floatingLabelText="Question Count"
+                        value={this.state.count}
+                        onChange={this.handleCountChange}
+                        maxHeight={200}
+                    >
+                        {countItems}
+                    </SelectField>
+                    <br />
+                    <RaisedButton label="Create Game" onClick={() => this.props.createGame(this.state.count, this.state.dif)} />
                 </Paper>
             </div>
         );

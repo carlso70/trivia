@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
+import { List, ListItem } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import Paper from 'material-ui/Paper';
 
-// Game Page is shown when a user enters a game
 class Lobby extends Component {
     constructor(props) {
         super(props);
@@ -17,10 +19,27 @@ class Lobby extends Component {
     }
 
     render() {
+        var list = [];
+        // Declare users to check for undefined 
+        var users = this.state.game.users;
+        if (users != undefined) {
+            users.map((row, index) => (
+                list.push(
+                    <ListItem
+                        primaryText={row.username}
+                        leftAvatar={<Avatar src={row.avatarUrl} />}
+                    />
+                )
+            ));
+        }
         return (
-                <div>
-                <h4>Lobby</h4>
-                </div>
+            <div>
+                <Paper zDepth={2}>
+                    <List>
+                        {list}
+                    </List>
+                </Paper>
+            </div>
         );
     }
 }

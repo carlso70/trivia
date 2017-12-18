@@ -14,7 +14,7 @@ import (
 )
 
 func DefaultAvatarUrl() string {
-	return "https://s3.us-east-2.amazonaws.com/triviacast/default.png"
+	return "https://s3.us-east-2.amazonaws.com/triviacast/default.jpg"
 }
 
 func UploadFileToS3(filename string) string {
