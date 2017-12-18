@@ -5,7 +5,8 @@ import './App.css';
 import Game from './pages/Game';
 import Home from './pages/Home';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { createGameUrl, joinGameUrl } from './utils/urls';
+import { createGameUrl, joinGameUrl, gameSocketUrl } from './utils/urls';
+import socketIOClient from 'socket.io-client';
 
 class App extends Component {
     constructor(props) {
@@ -21,6 +22,28 @@ class App extends Component {
         var user = JSON.parse(localStorage.getItem("triviaUser"));
         console.log(user);
         return user;
+    }
+
+    connectToGameSocket = () => {
+        if (!this.state.game.id)
+            return; // TODO display not in game error msg
+        if (this.socket) {
+            // reconnect the websocket
+        }
+        const endpoint = gameSocketUrl + this.state.game.id;
+        this.socket = new WebSocket(endpoint);
+        this.socket.onmessage = evt => {
+            console.log(evt);
+            this.setState({ game: evt.data });
+        };
+    }
+
+    broadcastGameMessage = (message) => {
+        if(!this.socket) {
+            console.log("Socket not initialized");
+            return;
+        }
+        this.socket.send(message);
     }
 
     // createGame attempts to create a game, and then join the game
@@ -53,6 +76,8 @@ class App extends Component {
                 this.setState({
                     game: data,
                     inGame: true
+                }, () => {
+                    this.connectToGameSocket();
                 });
             }
         });
@@ -87,6 +112,8 @@ class App extends Component {
                 this.setState({
                     game: data,
                     inGame: true
+                }, () => {
+                    this.connectToGameSocket();
                 });
             }
         });

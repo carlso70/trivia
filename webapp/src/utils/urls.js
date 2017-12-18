@@ -9,3 +9,5 @@ export const listGames = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.c
 export const setSecurityQuestionUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/setsecurityquestion";
 export const answerSecurityQuestionUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/answersecurityquestion";
 export const getSecurityQuestionUrl = "http://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:8080/getsecurityquestion";
+export const gameSocketUrl = "ws://ec2-18-221-200-72.us-east-2.compute.amazonaws.com:3000/game_socket/";
+

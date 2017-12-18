@@ -5,8 +5,11 @@ import FlatButton from 'material-ui/FlatButton';
 class Game extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            game: this.props.game
+        };
     }
-    
+
     render() {
         return (
             <div>
