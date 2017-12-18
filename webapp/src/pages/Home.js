@@ -16,26 +16,13 @@ import {
 import Slider from 'material-ui/Slider';
 import { listGames } from '../utils/urls';
 
-const testTable = [
-    {
-        gameId: 4,
-        host: 'user1'
-    },
-    {
-        gameId: 123123,
-        host: 'test user999'
-    },
-    {
-        gameId: 144444,
-        host: 'another user'
-    },
-];
-
+// basic styles for the paper elements
 const style = {
     margin: 15,
-    padding: 10,
+    padding: 10
 };
 
+// Creates a list of menu items for the selecting question count on the create game settings paper
 const countItems = [];
 for (let i = 1; i < 20; i++ ) {
     countItems.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
@@ -94,26 +81,6 @@ class Home extends Component {
         return (
                 <div>
                 <Paper style={style} zDepth={2}>
-                <h3>Game Settings</h3>
-                <SelectField onChange={this.handleDifChange} value={this.state.dif} floatingLabelText="Difficulty">
-                <MenuItem value={1} primaryText="Easy" />
-                <MenuItem value={2} primaryText="Medium" />
-                <MenuItem value={3} primaryText="Hard" />
-                </SelectField>
-                <br/>
-                <SelectField
-                 floatingLabelText="Question Count"
-                 value={this.state.count}
-                 onChange={this.handleCountChange}
-                 maxHeight={200}
-                  >
-                  {countItems}
-                </SelectField>
-                <br />
-                <RaisedButton label="Create Game" onClick={() => this.props.createGame(this.state.count, this.state.dif)}/>
-                </Paper>
-
-                <Paper style={style} zDepth={2}>
                     <h3>Games</h3>
                 <Table onRowSelection={this.onRowSelection}>
                         <TableHeader>
@@ -133,6 +100,26 @@ class Home extends Component {
                     </Table>
                 <FlatButton style={{ margin: 15 }} onClick={() => this.props.joinGame(this.state.games[this.state.selected])}>Join Game</FlatButton>
                 <FlatButton style={{ margin: 15 }} onClick={() => this.getAllGames()}>Refresh</FlatButton>
+                </Paper>
+
+                <Paper style={style} zDepth={2}>
+                <h3>Game Settings</h3>
+                <SelectField onChange={this.handleDifChange} value={this.state.dif} floatingLabelText="Difficulty">
+                <MenuItem value={1} primaryText="Easy" />
+                <MenuItem value={2} primaryText="Medium" />
+                <MenuItem value={3} primaryText="Hard" />
+                </SelectField>
+                <br/>
+                <SelectField
+            floatingLabelText="Question Count"
+            value={this.state.count}
+            onChange={this.handleCountChange}
+            maxHeight={200}
+                >
+                {countItems}
+            </SelectField>
+                <br />
+                <RaisedButton label="Create Game" onClick={() => this.props.createGame(this.state.count, this.state.dif)}/>
                 </Paper>
             </div>
         );
