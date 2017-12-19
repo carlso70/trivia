@@ -247,9 +247,9 @@ func (g *Game) RemoveUserFromGame(id int) error {
 	return errors.New("Error: Failure to delete, user not in game")
 }
 
-func (g *Game) BuildQuestionDeck() {
+func (g *Game) BuildQuestionDeck() []question.Question {
 	dif := question.ConvertDifficulty(g.GameDifficulty) // convert the int value to a difficulty string
-	g.QuestionDeck = repo.GenerateQuestionDeck(dif, g.QuestionCt)
+	return repo.GenerateQuestionDeck(dif, g.QuestionCt)
 }
 
 // alreadyAnswered is a utility function to check if a user has already entered a response
