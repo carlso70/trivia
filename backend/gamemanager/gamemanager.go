@@ -53,7 +53,9 @@ func (g *GameManager) CreateGame(difficulty int, questionCt int, userId int) (*g
 	newGame.GameDifficulty = difficulty
 	newGame.QuestionCt = questionCt
 	newGame.QuestionDeck = newGame.BuildQuestionDeck()
-	fmt.Println("Deck:", newGame.QuestionDeck)
+	if len(newGame.QuestionDeck) > 0 {
+		newGame.CurrentQuestion = newGame.QuestionDeck[0]
+	}
 
 	// Find the user in the db, then add the user to the game
 	usr, err := repo.FindUser(userId)
