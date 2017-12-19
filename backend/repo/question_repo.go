@@ -24,5 +24,6 @@ func GenerateQuestionDeck(difficulty string, ct int) []question.Question {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("BUILD DECK OF QUESTIONS:", result)
 	return result
 }

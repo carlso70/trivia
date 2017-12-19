@@ -115,6 +115,7 @@ func TestDeleteUser(t *testing.T) {
 func TestGenerateQuestionDeck(t *testing.T) {
 	deck := GenerateQuestionDeck("Easy", 10)
 	if len(deck) != 10 {
+		t
 		t.Errorf("Error Deck Length, Wanted %d : Recieved %d", 10, len(deck))
 	}
 }
