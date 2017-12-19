@@ -1,6 +1,8 @@
 package repo
 
 import (
+	"fmt"
+
 	"github.com/carlso70/trivia/backend/question"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -11,6 +13,7 @@ func GenerateQuestionDeck(difficulty string, ct int) []question.Question {
 		Addrs: Host,
 	})
 	if err != nil {
+		fmt.Println("ERROR GENERATING QUESTION_DECK:", err)
 		return []question.Question{}
 	}
 	defer session.Close()
