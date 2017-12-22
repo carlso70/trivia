@@ -230,8 +230,12 @@ func (g *Game) AddUserToGame(user user.User) error {
 	fmt.Println("Adding user:", user.Username, "to game:", g.Id)
 	// Broadcast new user
 	gameJson, err := json.Marshal(g)
+	if err != nil {
+		fmt.Println("ERROR MARSHALLING USER:", err)
+		return err
+	}
 	g.hub.broadcast <- []byte(gameJson)
-	return err
+	return nil
 }
 
 // RemoveUserFromGame will remove a specific user from the game if it is exists
