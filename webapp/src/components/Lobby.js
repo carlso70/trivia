@@ -13,7 +13,7 @@ class Lobby extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if (nextProps.game) {
+        if (nextProps.game != this.state.game) {
             this.setState({ game: nextProps.game });
         }
     }

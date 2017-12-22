@@ -23,17 +23,19 @@ class App extends Component {
         return user;
     }
 
+    // connectToGameSocket connects the websocket to the current game's websocket 
     connectToGameSocket = () => {
         if (!this.state.game.id)
             return; // TODO display not in game error msg
         const endpoint = gameSocketUrl + this.state.game.id;
         this.socket = new WebSocket(endpoint);
         this.socket.onmessage = evt => {
-            console.log(evt);
+            console.log(JSON.parse(evt.data));
             this.setState({ game: JSON.parse(evt.data) });
         };
     }
 
+    // broadcastGameMessage sends a message to the game server over the socket connection
     broadcastGameMessage = (message) => {
         if (!this.socket) {
             console.log("Socket not initialized");
