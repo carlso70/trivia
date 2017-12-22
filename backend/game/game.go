@@ -207,7 +207,10 @@ func (g *Game) AddUserToGame(user user.User) error {
 
 	// Set the id of the users gameId to the id of the game
 	user.GameId = g.Id
-	repo.UpdateUser(user)
+	if err := repo.UpdateUser(user); err != nil {
+		fmt.Println("ERROR UPDATING USER AFTER CHANGING GAMEID:", err)
+		return err
+	}
 
 	// Dereference the user point and append it to current game slice
 	g.Users = append(g.Users, user)
@@ -226,9 +229,9 @@ func (g *Game) AddUserToGame(user user.User) error {
 
 	fmt.Println("Adding user:", user.Username, "to game:", g.Id)
 	// Broadcast new user
-	gameJson, _ := json.Marshal(g)
+	gameJson, err := json.Marshal(g)
 	g.hub.broadcast <- []byte(gameJson)
-	return nil
+	return err
 }
 
 // RemoveUserFromGame will remove a specific user from the game if it is exists
