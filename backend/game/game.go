@@ -199,14 +199,16 @@ func (g *Game) endGame() {
 
 // AddUserToGame checks if the user is in the game, if it is then append to game slice
 func (g *Game) AddUserToGame(user user.User) error {
-	for _, usr := range g.Users {
-		if usr.Id == user.Id {
-			return errors.New("Error: User already in game")
-		}
+	if user.GameId == g.Id {
+		return errors.New("User already in game")
 	}
 
 	// Set the id of the users gameId to the id of the game
 	user.GameId = g.Id
+	if err := repo.UpdateUser(user); err != nil {
+		return errors.New("Error updating user while adding to game")
+	}
+
 	// Dereference the user point and append it to current game slice
 	g.Users = append(g.Users, user)
 
@@ -224,7 +226,10 @@ func (g *Game) AddUserToGame(user user.User) error {
 
 	fmt.Println("Adding user:", user.Username, "to game:", g.Id)
 	// Broadcast new user
-	gameJson, _ := json.Marshal(g)
+	gameJson, err := json.Marshal(g)
+	if err != nil {
+		return err
+	}
 	g.hub.broadcast <- []byte(gameJson)
 	return nil
 }
