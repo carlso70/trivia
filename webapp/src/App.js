@@ -36,12 +36,17 @@ class App extends Component {
     }
 
     // broadcastGameMessage sends a message to the game server over the socket connection
-    broadcastGameMessage = (message) => {
+    broadcast = (message) => {
         if (!this.socket) {
             console.log("Socket not initialized");
             return;
         }
-        this.socket.send(message);
+        console.log("Sending answer " + message);
+        var payload = {
+            username: this.state.user.username,
+            answer: message
+        }
+        this.socket.send(JSON.stringify(payload));
     }
 
     // createGame attempts to create a game, and then join the game
@@ -120,7 +125,7 @@ class App extends Component {
     render() {
         var component;
         if (!this.state.user) component = <h3>PLEASE LOG IN</h3>;
-        else if (this.state.inGame) component = <Game user={this.state.user} game={this.state.game} />;
+        else if (this.state.inGame) component = <Game user={this.state.user} game={this.state.game} broadcast={this.broadcast} />;
         else component = <Home user={this.state.user} createGame={this.createGame} joinGame={this.joinGame} />;
 
         return (

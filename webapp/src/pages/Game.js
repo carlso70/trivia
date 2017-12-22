@@ -43,6 +43,7 @@ class Game extends Component {
         window.location.reload();
     }
 
+
     render() {
         var component;
         if (this.state.game.inLobby)
@@ -50,7 +51,7 @@ class Game extends Component {
         else if (this.state.game.gameOver)
             component = <Scoreboard game={this.state.game} />;
         else
-            component = <QuestionPage game={this.state.game} />;
+            component = <QuestionPage game={this.state.game} broadcast={this.props.broadcast} />;
         return (
             <div>
                 {component}
