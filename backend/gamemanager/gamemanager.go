@@ -53,6 +53,9 @@ func (g *GameManager) CreateGame(difficulty int, questionCt int, userId int) (*g
 	newGame.GameDifficulty = difficulty
 	newGame.QuestionCt = questionCt
 	newGame.QuestionDeck = newGame.BuildQuestionDeck()
+	// Start open the websocket to connect to the game
+	newGame.InitGameSocket()
+
 	if len(newGame.QuestionDeck) > 0 {
 		newGame.CurrentQuestion = newGame.QuestionDeck[0]
 	}
@@ -70,9 +73,6 @@ func (g *GameManager) CreateGame(difficulty int, questionCt int, userId int) (*g
 
 	// Set the game host to the creator
 	newGame.Host = usr.Username
-
-	// Start open the websocket to connect to the game
-	newGame.InitGameSocket()
 
 	// Add game to list of games
 	g.Games = append(g.Games, newGame)
