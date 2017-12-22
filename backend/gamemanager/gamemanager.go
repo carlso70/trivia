@@ -70,7 +70,7 @@ func (g *GameManager) CreateGame(difficulty int, questionCt int, userId int) (*g
 		}
 	*/
 
-	newGame.Users = append(g.Users, usr)
+	newGame.Users = append(newGame.Users, usr)
 	newGame.RealUserCount += 1
 
 	// Set the game host to the creator
