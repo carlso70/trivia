@@ -64,14 +64,9 @@ func (g *GameManager) CreateGame(difficulty int, questionCt int, userId int) (*g
 	}
 
 	// Add the new user to the game
-	/*
-		if err := newGame.AddUserToGame(usr); err != nil {
-			panic(err)
-		}
-	*/
-
-	newGame.Users = append(newGame.Users, usr)
-	newGame.RealUserCount += 1
+	if err := newGame.AddUserToGame(usr); err != nil {
+		panic(err)
+	}
 
 	// Set the game host to the creator
 	newGame.Host = usr.Username
