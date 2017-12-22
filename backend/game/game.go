@@ -207,6 +207,8 @@ func (g *Game) AddUserToGame(user user.User) error {
 
 	// Set the id of the users gameId to the id of the game
 	user.GameId = g.Id
+	repo.UpdateUser(user)
+
 	// Dereference the user point and append it to current game slice
 	g.Users = append(g.Users, user)
 

@@ -58,29 +58,6 @@ func TestRunGame(t *testing.T) {
 	}
 }
 
-func TestLobby(t *testing.T) {
-	game := Init()
-	if err := game.AddUserToGame(user.User{Id: 10}); err != nil {
-		t.Error(err)
-	}
-	game.InitGameSocket()
-	// Check for default lobby mode on game create
-	if game.InLobby != true {
-		t.Error("Out of lobby mode")
-	}
-	if err := game.AddUserToGame(user.User{Id: 11}); err != nil {
-		t.Error(err)
-	}
-	if err := game.AddUserToGame(user.User{Id: 12}); err != nil {
-		t.Error(err)
-	}
-	if game.InLobby != true || game.RealUserCount == 3 {
-		t.Error("Invalid ")
-	}
-
-	t.Log("Creating Game")
-}
-
 func TestAddChromeCastUser(t *testing.T) {
 	game := Init()
 	if err := game.AddUserToGame(user.User{Id: 0, Username: "cast"}); err != nil {
