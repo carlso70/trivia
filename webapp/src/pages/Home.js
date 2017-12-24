@@ -66,6 +66,7 @@ class Home extends Component {
         }).then((response) => {
             if (response.status == 200)
                 return response.json();
+            alert("SERVER ERROR")
             return null;
         }).then((data) => {
             if (data) {

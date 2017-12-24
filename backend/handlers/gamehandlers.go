@@ -90,6 +90,8 @@ func JoinGame(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
+	fmt.Println("Adding user:", request.UserId, "to game:", request.GameId)
+
 	// Get the gamemanager instance, start new game
 	gamemanager := gamemanager.GetInstance()
 	game, err := gamemanager.AddUserToGame(request.GameId, request.UserId)

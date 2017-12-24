@@ -150,6 +150,7 @@ func (g *GameManager) DeleteGame(gameId int) error {
 // findGame searchs existing games, and returns the index of to the game if it exists
 func findGame(games []*game.Game, gameId int) (*game.Game, error) {
 	for _, gm := range games {
+		fmt.Println(gm)
 		if gm.Id == gameId {
 			return gm, nil
 		}

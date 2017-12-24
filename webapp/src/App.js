@@ -88,12 +88,15 @@ class App extends Component {
 
     // joinGame attempts to create a game, then swtich the state to inGame and display a game page
     joinGame = (game) => {
-        console.log(game.gameId);
         if (!this.state.user) {
             alert("Please Sign In");
             return;
         }
-
+        if (!game)  {
+            alert("Please check a game to join");
+            return;
+        }
+        console.log("id = " + game.id);
         console.log(this.state.user.id);
 
         fetch(joinGameUrl, {
