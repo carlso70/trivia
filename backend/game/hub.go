@@ -41,6 +41,8 @@ func (h *Hub) run() {
 			if _, ok := h.clients[client]; ok {
 				delete(h.clients, client)
 				close(client.send)
+				// Remove the client from it's current game
+				client.ExitClient()
 			}
 		case message := <-h.broadcast:
 			for client := range h.clients {
