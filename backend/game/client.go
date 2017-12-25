@@ -6,6 +6,7 @@ package game
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -126,6 +127,14 @@ func (c *Client) writePump() {
 				return
 			}
 		}
+	}
+}
+
+// exitClient leaves the client from it's current game, if it is in one
+func (c *Client) exitClient() {
+	// Remove the user from the game
+	if err := c.hub.currentGame.RemoveUserFromGame(c.user.Id); err != nil {
+		panic(errors.New("Errors removing user from game"))
 	}
 }
 
