@@ -39,10 +39,10 @@ func (h *Hub) run() {
 			h.clients[client] = true
 		case client := <-h.unregister:
 			if _, ok := h.clients[client]; ok {
-				delete(h.clients, client)
-				close(client.send)
 				// Remove the client from it's current game
 				client.ExitClient()
+				delete(h.clients, client)
+				close(client.send)
 			}
 		case message := <-h.broadcast:
 			for client := range h.clients {
