@@ -4,6 +4,10 @@
 
 package game
 
+import (
+	"fmt"
+)
+
 // hub maintains the set of active clients and broadcasts messages to the
 // clients.
 type Hub struct {
@@ -41,6 +45,7 @@ func (h *Hub) run() {
 			if _, ok := h.clients[client]; ok {
 				// Remove the client from it's current game
 				client.ExitClient()
+				fmt.Println("Client unregistered")
 				delete(h.clients, client)
 				close(client.send)
 			}
