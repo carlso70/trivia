@@ -6,13 +6,13 @@ package game
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"time"
 
-	"github.com/carlso70/trivia/backend/user"
 	"github.com/gorilla/websocket"
 )
 
@@ -53,8 +53,8 @@ type Client struct {
 	// Buffered channel of outbound messages.
 	send chan []byte
 
-	// user associated with the client
-	user *user.User
+	// username associated with the client
+	username string
 }
 
 // readPump pumps messages from the websocket connection to the hub.
@@ -79,8 +79,13 @@ func (c *Client) readPump() {
 			break
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-		fmt.Println(c.hub.currentGame.responses)
-		c.hub.currentGame.responses <- string(message)
+
+		var answer QuestionResponse
+		if err := json.Unmarshal([]byte(message), &answer); err != nil {
+			panic(err)
+		}
+		c.username = answer.Username
+		c.hub.currentGame.responses <- answer
 	}
 }
 
@@ -134,10 +139,8 @@ func (c *Client) writePump() {
 func (c *Client) ExitClient() {
 	fmt.Println("Current Game:", c.hub.currentGame)
 	// Remove the user from the game
-	if c.hub.currentGame != nil {
-		if err := c.hub.currentGame.RemoveUserFromGame(c.user.Id); err != nil {
-			panic(errors.New("Errors removing user from game"))
-		}
+	if err := c.hub.currentGame.RemoveUserFromGameByUsername(c.username); err != nil {
+		panic(err)
 	}
 }
 
@@ -148,7 +151,7 @@ func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
-	client := &Client{hub: hub, conn: conn, send: make(chan []byte, 1024)}
+	client := &Client{hub: hub, conn: conn, send: make(chan []byte, 1024), username: ""}
 	client.hub.register <- client
 
 	// Allow collection of memory referenced by the caller by doing all work in

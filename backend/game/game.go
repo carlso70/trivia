@@ -19,22 +19,22 @@ type QuestionResponse struct {
 }
 
 type Game struct {
-	Id              int                 `json:"id"`
-	Users           []user.User         `json:"users"`
-	QuestionDeck    []question.Question `json:"-"`
-	CurrentQuestion question.Question   `json:"question"`
-	Scoreboard      map[string]int      `json:"scoreboard"`
-	QuestionNumber  int                 `json:"questionNumber"`
-	AskingQuestion  bool                `json:"askingQuestion"`
-	QuestionCt      int                 `json:"questionCt"`
-	GameDifficulty  int                 `json:"difficulty"`
-	Host            string              `json:"host"`
-	Winner          string              `json:"-"`
-	RealUserCount   int                 `json:"-"`
-	responses       chan string         `json:"-"`
-	GameOver        bool                `json:"gameOver"`
-	InLobby         bool                `json:"inLobby"`
-	hub             *Hub                `json:"-"`
+	Id              int                   `json:"id"`
+	Users           []user.User           `json:"users"`
+	QuestionDeck    []question.Question   `json:"-"`
+	CurrentQuestion question.Question     `json:"question"`
+	Scoreboard      map[string]int        `json:"scoreboard"`
+	QuestionNumber  int                   `json:"questionNumber"`
+	AskingQuestion  bool                  `json:"askingQuestion"`
+	QuestionCt      int                   `json:"questionCt"`
+	GameDifficulty  int                   `json:"difficulty"`
+	Host            string                `json:"host"`
+	Winner          string                `json:"-"`
+	RealUserCount   int                   `json:"-"`
+	responses       chan QuestionResponse `json:"-"`
+	GameOver        bool                  `json:"gameOver"`
+	InLobby         bool                  `json:"inLobby"`
+	hub             *Hub                  `json:"-"`
 }
 
 const (
@@ -44,7 +44,7 @@ const (
 func Init() *Game {
 	id := utils.GenerateId()
 	scoreboard := make(map[string]int)
-	responses := make(chan string)
+	responses := make(chan QuestionResponse)
 	deck := question.GetDefaultQuestions()
 	// Default QuestionCt = 10, GameDif = 1
 	return &Game{
@@ -121,20 +121,13 @@ func (g *Game) startQuestion(q question.Question) error {
 	go func() {
 		for g.AskingQuestion {
 			select {
-			case c := <-g.responses:
-				var answer QuestionResponse
-				fmt.Println("RECIEVED RESPONSE:", c)
-				err := json.Unmarshal([]byte(c), &answer)
-				if err == nil {
-					// if there is no err with the response add it to the current answer array
-					if alreadyAnswered(answers, answer) == false {
-						answers = append(answers, answer)
-					}
-					if len(answers) == g.RealUserCount {
-						g.AskingQuestion = false
-					}
-				} else {
-					fmt.Println("Error Marshaling question response", err)
+			case answer := <-g.responses:
+				// if there is no err with the response add it to the current answer array
+				if alreadyAnswered(answers, answer) == false {
+					answers = append(answers, answer)
+				}
+				if len(answers) == g.RealUserCount {
+					g.AskingQuestion = false
 				}
 			case <-timerChan:
 				fmt.Println("TIMER EXPIRED")
@@ -238,6 +231,24 @@ func (g *Game) AddUserToGame(user user.User) error {
 func (g *Game) RemoveUserFromGame(id int) error {
 	for key, usr := range g.Users {
 		if usr.Id == id {
+			// if the user is the game, remove
+			fmt.Println("Removing User:", usr.Username, "from game:", g.Id)
+			g.Users = append(g.Users[:key], g.Users[key+1:]...)
+			// Set the game to be deleted if the user count == 0
+			if len(g.Users) == 0 {
+				g.GameOver = true
+			}
+			return nil
+		}
+	}
+
+	return errors.New("Error: Failure to delete, user not in game")
+}
+
+// RemoveUserFromGameByUsername will remove a specific user from the game if it is exists
+func (g *Game) RemoveUserFromGameByUsername(username string) error {
+	for key, usr := range g.Users {
+		if usr.Username == username {
 			// if the user is the game, remove
 			fmt.Println("Removing User:", usr.Username, "from game:", g.Id)
 			g.Users = append(g.Users[:key], g.Users[key+1:]...)

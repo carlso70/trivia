@@ -40,9 +40,11 @@ func (h *Hub) run() {
 	for {
 		select {
 		case client := <-h.register:
+			fmt.Println("Register Client:", client)
 			h.clients[client] = true
 		case client := <-h.unregister:
 			if _, ok := h.clients[client]; ok {
+				fmt.Println("Unregister Client:", client)
 				// Remove the client from it's current game
 				client.ExitClient()
 				fmt.Println("Client unregistered")
