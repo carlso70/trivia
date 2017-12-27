@@ -132,9 +132,12 @@ func (c *Client) writePump() {
 
 // ExitClient leaves the client from it's current game, if it is in one
 func (c *Client) ExitClient() {
+	fmt.Println("Current Game:", c.hub.currentGame)
 	// Remove the user from the game
-	if err := c.hub.currentGame.RemoveUserFromGame(c.user.Id); err != nil {
-		panic(errors.New("Errors removing user from game"))
+	if c.hub.currentGame != nil {
+		if err := c.hub.currentGame.RemoveUserFromGame(c.user.Id); err != nil {
+			panic(errors.New("Errors removing user from game"))
+		}
 	}
 }
 
